@@ -1,0 +1,7 @@
+/img/*
+  Cache-Control: public, max-age=2592000
+/*.png
+  Cache-Control: public, max-age=2592000
+/catalogue.csv
+  Content-Type: text/csv; charset=utf-8
+  Cache-Control: public, max-age=3600

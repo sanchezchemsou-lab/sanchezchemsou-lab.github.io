@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /merci
+Disallow: /raison
+Disallow: /commande
+
+Sitemap: https://elbas-we7dk.pages.dev/sitemap.xml

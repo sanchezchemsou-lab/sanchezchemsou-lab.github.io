@@ -1,0 +1,26 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تتبع طلبك | ELBAS WE7DK</title><link rel="icon" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#070707;color:#f4f4f4;font-family:Cairo,sans-serif;line-height:1.7}.w{max-width:560px;margin:auto;padding:24px 16px 60px}
+img{height:44px}h1{font-size:26px;margin:18px 0 6px}p{color:#bbb}
+input{width:100%;box-sizing:border-box;margin-top:14px;padding:14px;border-radius:12px;border:1px solid #2a2a2a;background:#111;color:#fff;font:700 20px Cairo,sans-serif;text-align:center;direction:ltr}
+input:focus{outline:2px solid #FFCC4D}
+button{display:block;width:100%;margin-top:12px;background:#FFCC4D;color:#070707;font:900 18px Cairo,sans-serif;border:0;padding:13px;border-radius:12px;cursor:pointer}
+button:disabled{opacity:.6;cursor:wait}
+#r{margin-top:18px;padding:16px;border-radius:12px;background:#111;border:1px solid #2a2a2a;display:none;font-size:18px}
+#r.ok{border-color:#FFCC4D}.s{font-size:13px;color:#888;margin-top:18px}a{color:#FFCC4D}</style><script src="https://js-de.sentry-cdn.com/a6d9096d93e883224d0adf14ecc1f693.min.js" crossorigin="anonymous"></script></head>
+<body><div class="w"><a href="./"><img src="logo.png" alt="ELBAS WE7DK"></a>
+<h1>📦 تتبع طلبك</h1><p>اكتب رقم التيليفون اللي طلبت بيه، ويظهرلك وين وصلت طلبيتك.</p>
+<form id="f"><input id="t" type="tel" inputmode="numeric" autocomplete="tel" maxlength="20" placeholder="0555 12 34 56" required>
+<button id="b" type="submit">شوف الحالة</button></form>
+<div id="r" role="status" aria-live="polite"></div>
+<p class="s">نبينو غير حالة الطرد، ما نبينو حتى معلومة أخرى. ما لقيتش طلبيتك؟ <a href="https://www.instagram.com/elbas_we7dk/" target="_blank" rel="noopener">ابعثلنا في Instagram</a> · <a href="./">رجع للمتجر</a></p></div>
+<script>
+const f=document.getElementById("f"),t=document.getElementById("t"),b=document.getElementById("b"),r=document.getElementById("r");
+function show(m,ok){r.textContent=m;r.className=ok?"ok":"";r.style.display="block"}
+f.addEventListener("submit",async e=>{e.preventDefault();b.disabled=true;show("...",false);
+ try{const x=await fetch("https://ew-ig-bot.sanchezchemsou.workers.dev/api/track",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({tel:t.value}),signal:AbortSignal.timeout(30000)});
+  const j=await x.json();show(j.msg||"عاود بعد شوية",!!(j.ok&&j.found))}
+ catch(err){show("صرات مشكلة في الاتصال. عاود بعد شوية ولا ابعثلنا في Instagram.",false)}
+ b.disabled=false});
+</script></body></html>
