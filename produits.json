@@ -1,7 +1,65 @@
 {
- "maj": "2026-11-19",
+ "maj": "2026-11-20",
  "formulaire": "https://docs.google.com/forms/d/e/1FAIpQLSfqAFtPjS53pM7ie7EvTt4_EhEUWL1CACVT0k6WY4YrFyOd0g/viewform",
  "produits": [
+  {
+   "id": "hoodie-asta-collab",
+   "nom": "HOODIE ASTA COLLAB",
+   "type": "HOODIE",
+   "tag": "ANIME",
+   "prix": 3900,
+   "tailles": [
+    "S",
+    "M",
+    "L",
+    "XL"
+   ],
+   "couleurs": [
+    "Black"
+   ],
+   "desc": "ديزاين جديد مستوحى من الأنمي، للفانز الحقيقيين.\n\n- هودي oversize، قماش سميك وسخون\n- طباعة DTF قدام ولور\n- الألوان ما يروحوش مع الغسيل\n- الكابيشو (capuche) عريض ومريح\n- المقاسات: S / M / L / XL\n- الألوان: Black\n- التوصيل 500 DA: للمكتب تاع ZR Express ولا للدار\n- الخلاص كي توصلك الطلبية",
+   "img": [
+    "img/hoodie-asta-collab/back.webp",
+    "img/hoodie-asta-collab/front.webp",
+    "img/hoodie-asta-collab/combo.webp",
+    "img/hoodie-asta-collab/photo.webp"
+   ],
+   "thumb": "img/hoodie-asta-collab/t_back.webp",
+   "thumb2": "img/hoodie-asta-collab/t_front.webp",
+   "avif": "img/hoodie-asta-collab/t_back.avif",
+   "sold": false,
+   "commande": "commande.html?p=HOODIE+ASTA+COLLAB&t=HOODIE+%28sweat%29&c=NOIR",
+   "date": "2026-11-19"
+  },
+  {
+   "id": "hoodie-yuno",
+   "nom": "HOODIE YUNO",
+   "type": "HOODIE",
+   "tag": "ANIME",
+   "prix": 3900,
+   "tailles": [
+    "S",
+    "M",
+    "L",
+    "XL"
+   ],
+   "couleurs": [
+    "Black"
+   ],
+   "desc": "ديزاين جديد مستوحى من الأنمي، للفانز الحقيقيين.\n\n- هودي oversize، قماش سميك وسخون\n- طباعة DTF قدام ولور\n- الألوان ما يروحوش مع الغسيل\n- الكابيشو (capuche) عريض ومريح\n- المقاسات: S / M / L / XL\n- الألوان: Black\n- التوصيل 500 DA: للمكتب تاع ZR Express ولا للدار\n- الخلاص كي توصلك الطلبية",
+   "img": [
+    "img/hoodie-yuno/back.webp",
+    "img/hoodie-yuno/front.webp",
+    "img/hoodie-yuno/combo.webp",
+    "img/hoodie-yuno/photo.webp"
+   ],
+   "thumb": "img/hoodie-yuno/t_back.webp",
+   "thumb2": "img/hoodie-yuno/t_front.webp",
+   "avif": "img/hoodie-yuno/t_back.avif",
+   "sold": false,
+   "commande": "commande.html?p=HOODIE+YUNO&t=HOODIE+%28sweat%29&c=NOIR",
+   "date": "2026-11-19"
+  },
   {
    "id": "hoodie-4-chiffres",
    "nom": "HOODIE 4 CHIFFRES",
