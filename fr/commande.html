@@ -89,7 +89,7 @@ function showProd(){const nm=($("#pr").value||"").trim();if(!nm||!window.PRODS)r
  const x=PRODS.find(p=>nm===p.nom||nm.startsWith(p.nom));
  $("#pl").innerHTML=PRODS.map(p=>`<option value="${p.nom.replace(/"/g,"&quot;")}">`).join("");
  if(!x||!Q.get("p")){return}
- CUR=x;$("#pn").textContent=nm;$("#pi").src=x.thumb||(x.img||[])[0]||"";$("#pc").style.display="flex";$("#prw").style.display="none";
+ CUR=x;if(Q.get("sold")==="1"&&x.sold){fetch("https://ew-ig-bot.sanchezchemsou.workers.dev/api/stock").then(r=>r.json()).then(j=>{const o=(j.p||{})[x.id];if(o&&(o.s.length||o.n.length)){CUR=Object.assign({},x,{prix:o.s.length?o.prix:x.prix,sold:false,stk:1});$("#pp").textContent="متوفر (SOLD) · "+money(CUR.prix);sum()}}).catch(()=>{})}$("#pn").textContent=nm;$("#pi").src=x.thumb||(x.img||[])[0]||"";$("#pc").style.display="flex";$("#prw").style.display="none";
  $("#pp").textContent=x.sold?"SOLD OUT · réimpression possible":money(x.prix);
  sum()}
 Promise.all([fetch("/produits.json").then(r=>r.json()).catch(()=>({})),fetch("https://ew-ig-bot.sanchezchemsou.workers.dev/api/extra").then(r=>r.json()).catch(()=>({}))]).then(([a,b])=>{window.PRODS=[...(b.produits||[]),...(a.produits||[])];showProd()});
@@ -163,7 +163,7 @@ $("#f").addEventListener("submit",async e=>{e.preventDefault();if(sent)return;
   return s.replace(/[^a-z0-9_-]/gi,"").slice(0,20)||"site"})();
  const NUM="EW-"+(Date.now().toString(36).slice(-3)+Math.random().toString(36).slice(2,4)).toUpperCase();
  try{sessionStorage.setItem("ew_num","#"+NUM)}catch(e){}
- const NT=("[#"+NUM+"] "+$("#nt").value.trim().slice(0,440)+" [المصدر: "+SRC+"] [🇫🇷 الكليان طلب بالفرنسية]"+PERSO+(promo()&&!(+$("#qt").value>=2&&val("tp")!=="T-SHIRT")?" [توصيل 300 برومو]":"")).trim();
+ const NT=((CUR&&CUR.stk?"[SOLD RETOUR "+CUR.prix+" دج] ":"")+"[#"+NUM+"] "+$("#nt").value.trim().slice(0,440)+" [المصدر: "+SRC+"] [🇫🇷 الكليان طلب بالفرنسية]"+PERSO+(promo()&&!(+$("#qt").value>=2&&val("tp")!=="T-SHIRT")?" [توصيل 300 برومو]":"")).trim();
  b.set("entry."+D.notes,NT);
  b.set("pageHistory",bureau?`0,${w.page},${w.office_page},${D.final}`:`0,${w.page},${D.final}`);b.set("fvv","1");
  $("#go").disabled=true;$("#go").textContent="...";

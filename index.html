@@ -42,7 +42,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(7,7,7,.88);backdrop-filt
 .card .ph{aspect-ratio:4/5;background:#0d0d0d;position:relative}
 .card img{width:100%;height:100%;object-fit:cover;display:block}
 .badge{position:absolute;top:10px;right:10px;font-family:Anton,sans-serif;letter-spacing:1px;font-size:12px;padding:3px 9px;border-radius:999px;background:var(--y);color:#070707}
-.badge.sold{background:#e5484d;color:#fff}
+.badge.sold{background:#e5484d;color:#fff}.badge.stk{background:#22c55e;color:#04210f}.st{color:#22c55e;font-weight:900}
 .so{color:#e5484d;font-family:Anton,sans-serif;letter-spacing:1px;font-weight:400}
 .card.is-sold img{filter:grayscale(.85) brightness(.75)}
 .card .in{padding:10px 12px 12px}
@@ -142,7 +142,7 @@ let f="ALL";const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const money=n=>"⁦"+n.toLocaleString("fr-FR").replace(/ | /g," ")+"⁩ دج";
 function card(p,i){const on=FAV.includes(p.id),pr=i<4?' loading="eager" fetchpriority="high"':' loading="lazy" decoding="async"';const im=`<img${pr} src="${p.thumb}" alt="${esc(p.nom)}">`;
- return `<div class="cw"><button class="card${p.sold?" is-sold":""}" data-id="${p.id}"><div class="ph">${p.avif?`<picture><source srcset="${p.avif}" type="image/avif">${im}</picture>`:im}${p.thumb2&&!p.sold?`<img class="b2" loading="lazy" src="${p.thumb2}" alt="" style="animation-delay:-${(p.id.length%5)*1.4}s">`:""}${p.sold?'<span class="badge sold">SOLD OUT</span>':`<span class="badge">${p.type==="HOODIE"?"HOODIE":"T-SHIRT"}</span>`}${isNew(p)?'<span class="nw">جديد ✨</span>':""}</div><div class="in"><h3>${esc(p.nom)}</h3><div class="pr">${p.sold?'<span class="so">SOLD OUT</span>':money(p.prix)}</div></div></button><button class="fav${on?" on":""}" data-fav="${p.id}" aria-label="زيد للمفضلة" aria-pressed="${on}">${on?"♥":"♡"}</button></div>`}
+ return `<div class="cw"><button class="card${p.sold&&!p.stk?" is-sold":""}" data-id="${p.id}"><div class="ph">${p.avif?`<picture><source srcset="${p.avif}" type="image/avif">${im}</picture>`:im}${p.thumb2&&!p.sold?`<img class="b2" loading="lazy" src="${p.thumb2}" alt="" style="animation-delay:-${(p.id.length%5)*1.4}s">`:""}${p.stk?'<span class="badge stk">SOLD · متوفر</span>':p.sold?'<span class="badge sold">SOLD OUT</span>':`<span class="badge">${p.type==="HOODIE"?"HOODIE":"T-SHIRT"}</span>`}${isNew(p)?'<span class="nw">جديد ✨</span>':""}</div><div class="in"><h3>${esc(p.nom)}</h3><div class="pr">${p.stk?'<span class="st">'+money(p.stk.prix)+' · '+p.stk.s.join(' ')+'</span>':p.sold?'<span class="so">SOLD OUT</span>':money(p.prix)}</div></div></button><button class="fav${on?" on":""}" data-fav="${p.id}" aria-label="زيد للمفضلة" aria-pressed="${on}">${on?"♥":"♡"}</button></div>`}
 function draw(){if(f==="FAV"&&!FAV.length)f="ALL";
  $("#shb").innerHTML=f==="FAV"?'<button type="button" id="shf">📤 ابعث المفضلة تاعك لصاحبك (ولا لدارك 😉)</button>':"";const qq=q.trim().toLowerCase();
  const ok=p=>(f==="ALL"||p.type===f||p.tag===f||(f==="FAV"&&FAV.includes(p.id))||(f==="SHARED"&&SH.includes(p.id)))&&(!qq||match(p,qq));
@@ -153,12 +153,12 @@ function draw(){if(f==="FAV"&&!FAV.length)f="ALL";
 function open(id){const p=P.find(x=>x.id===id);if(!p)return;
  $("#mi").src=p.img[0];$("#mi").alt=p.nom;
  $("#mth").innerHTML=p.img.map((s,i)=>`<img src="${s}" data-s="${s}" class="${i?"":"on"}" alt="">`).join("");
- $("#md").innerHTML=`<h2>${esc(p.nom)}</h2>${p.sold?'<div class="pr so">SOLD OUT</div><div class="liv">خلاص تباع. إذا تحبو، نقدرو نعاودو نطبعوه.</div>':`<div class="pr">${money(p.prix)}</div><div class="liv">+ توصيل 500 دج · الخلاص كي توصلك</div>`}
+ $("#md").innerHTML=`<h2>${esc(p.nom)}</h2>${p.stk?`<div class="pr">${money(p.stk.prix)}</div><div class="liv">قطعة متوفرة (SOLD) · المقاس: ${p.stk.s.join(' ')} · + توصيل · الخلاص كي توصلك</div>`:p.sold?'<div class="pr so">SOLD OUT</div><div class="liv">خلاص تباع. إذا تحبو، نقدرو نعاودو نطبعوه.</div>':`<div class="pr">${money(p.prix)}</div><div class="liv">+ توصيل 500 دج · الخلاص كي توصلك</div>`}
  <div class="row"><h4>المقاسات</h4><div class="pills">${p.tailles.map(t=>`<span>${esc(t)}</span>`).join("")}</div></div>
  <div class="row"><h4>اللون</h4><div class="pills">${p.couleurs.map(c=>`<span>${esc(c)}</span>`).join("")}</div></div>
  ${p.desc?`<div class="desc">${esc(p.desc)}</div>`:""}
  ${(()=>{const r=P.filter(x=>x.id!==p.id&&!x.sold&&x.tag===p.tag).sort((a,b)=>(b.type===p.type)-(a.type===p.type)).slice(0,4);return r.length?`<div class="row"><h4>موديلات تشبهلو</h4><div class="rel">${r.map(x=>`<button class="ri" data-id="${x.id}"><img loading="lazy" src="${x.thumb}" alt=""><span>${esc(x.nom.replace(/^(HOODIE|T-SHIRT) /,""))}</span></button>`).join("")}</div></div>`:""})()}
- <a class="cta ${p.sold?"alt":""}" href="${p.commande}" target="_blank" rel="noopener">${p.sold?"اطلب عاود الطبع ↺":"اطلب دروك 🛒"}</a>
+ <a class="cta ${p.sold&&!p.stk?"alt":""}" href="${p.stk?p.stk.u:p.commande}" target="_blank" rel="noopener">${p.stk?"اطلب بـ "+money(p.stk.prix):p.sold?"اطلب عاود الطبع ↺":"اطلب دروك 🛒"}</a>
  <div class="note">الفورم يتعمّر وحدو بإسم الموديل. كمّل غير المقاس والولاية.</div><div class="note"><a href="/p/${p.id}/" style="color:var(--y)">🔗 رابط المنتوج (باش تبعثو لصاحبك)</a></div>`;
  $("#m").classList.add("open");document.body.style.overflow="hidden";
  if(location.hash!=="#"+id)history.replaceState(null,"","#"+id);}
@@ -176,19 +176,7 @@ const HF={"rap":"RAP","anime":"ANIME","football":"FOOTBALL","hoodie":"HOODIE","t
 function route(){const h=decodeURIComponent(location.hash.slice(1)).toLowerCase();if(HF[h]){f=HF[h];draw();$("#chips").scrollIntoView({behavior:"smooth"});return}draw();if(h)open(h)}
 $("#q").addEventListener("input",e=>{q=e.target.value;draw()});
 if(SH.length)f="SHARED";
-(function(){var K="ew_gout",G={};try{G=JSON.parse(localStorage.getItem(K)||"{}")}catch(e){}G.t=G.t||{};G.y=G.y||{};
-var sv=function(){try{localStorage.setItem(K,JSON.stringify(G))}catch(e){}};
-var add=function(p,w){if(!p)return;G.t[p.tag]=Math.min(99,(G.t[p.tag]||0)+w);G.y[p.type]=Math.min(99,(G.y[p.type]||0)+w);sv()};
-var _o=open;open=function(id){add(P.find(function(x){return x.id===id}),1);return _o(id)};
-document.addEventListener("click",function(e){var c=e.target.closest(".chip");if(c){var k=c.dataset.f;if(["ANIME","RAP","FOOTBALL"].indexOf(k)>=0){G.t[k]=Math.min(99,(G.t[k]||0)+2);sv()}else if(["HOODIE","T-SHIRT"].indexOf(k)>=0){G.y[k]=Math.min(99,(G.y[k]||0)+2);sv()}}
- var fv=e.target.closest(".fav");if(fv)add(P.find(function(x){return x.id===fv.dataset.fav}),3)},true);
-var tot=0;for(var k in G.t)tot+=G.t[k];
-if(tot>=3&&!G.off){var ix={};P.forEach(function(p,i){ix[p.id]=i});var sc=function(p){return (G.t[p.tag]||0)*2+(G.y[p.type]||0)};
- P.sort(function(a,b){return (isNew(b)-isNew(a))||(sc(b)-sc(a))||(ix[a.id]-ix[b.id])});
- var h=document.getElementById("tvente");if(h){var a=document.createElement("button");a.type="button";a.className="gout";
-  a.style.cssText="display:block;margin-top:6px;background:none;border:1px solid #3a3a3a;color:#bdbdbd;border-radius:999px;padding:4px 12px;font:inherit;font-size:12px;cursor:pointer";
-  a.textContent="✨ مرتبين على حساب ذوقك · رجّع العادي";a.onclick=function(){G.off=1;sv();location.reload()};h.appendChild(a)}}
-})();
+fetch("https://ew-ig-bot.sanchezchemsou.workers.dev/api/stock").then(r=>r.json()).then(j=>{for(const p of P){const o=(j.p||{})[p.id];if(o&&(o.s.length||o.n.length)){const sz=[...o.s,...o.n],pr=o.s.length?o.prix:p.prix;p.stk={s:sz,prix:pr,u:"commande.html?"+new URLSearchParams({p:p.nom,t:p.type==="HOODIE"?"HOODIE (sweat)":"T-SHIRT",s:sz[0],sold:"1"})}}}route()}).catch(()=>{});   // 21/11 EW STOCK : retours dispo
 route();
 </script>
 <script>window.EW_AR={"hoodie": "هودي", "t-shirt": "تيشورت", "akaza": "أكازا", "zoro": "زورو", "roronoa": "رورونوا", "luffy": "لوفي", "ace": "آيس", "shanks": "شانكس", "naruto": "ناروتو", "itachi": "إيتاشي", "sasuke": "ساسكي", "uchiha": "أوتشيها", "obito": "أوبيتو", "gojo": "غوجو", "sukuna": "سوكونا", "toji": "توجي", "eren": "إيرين", "goku": "غوكو", "asta": "أستا", "aizen": "أيزن", "rangoku": "رينغوكو", "zinitsu": "زينيتسو", "kurapika": "كورابيكا", "hisoka": "هيسوكا", "guts": "غاتس", "berserk": "بيرسيرك", "dororo": "دورورو", "solo": "سولو", "leveling": "ليفلينغ", "amaterasu": "أماتيراسو", "hunter": "هانتر", "hxh": "هانتر", "one": "ون", "piece": "بيس", "messi": "ميسي", "cr7": "رونالدو", "neymar": "نيمار", "ney": "نيمار", "mbappe": "مبابي", "yamal": "يامال", "mahrez": "محرز", "pedri": "بيدري", "maldini": "مالديني", "kane": "كين", "rodri": "رودري", "musiala": "موسيالا", "palmer": "بالمر", "olise": "أوليز", "madrid": "مدريد", "barca": "برشلونة", "chelsea": "تشيلسي", "milano": "ميلانو", "santos": "سانتوس", "argentina": "الأرجنتين", "brazil": "البرازيل", "annaba": "عنابة", "makra": "مقرة", "usma": "اتحاد العاصمة", "kilowat": "كيلووات", "sayga": "سايغا", "meryoula": "مريولة", "pillave": "بيلاف", "ghira": "الغيرة", "flen": "فلان", "flenn": "فلان", "qamra": "قمرة", "blanka": "بلانكا", "halaf": "حلف", "rosalinda": "روزاليندا", "dak": "داك", "pac": "توباك", "shakur": "شاكور", "vierge": "فارغ", "btoul": "بطول", "goat": "غوت", "damgha": "دمغة", "liyam": "ليام", "bedri": "بدري", "milan": "ميلان", "storm": "ستورم", "freedom": "فريدم"}</script>
