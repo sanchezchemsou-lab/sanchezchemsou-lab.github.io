@@ -94,6 +94,7 @@ function showProd(){const nm=($("#pr").value||"").trim();if(!nm||!window.PRODS)r
  sum()}
 Promise.all([fetch("produits.json").then(r=>r.json()).catch(()=>({})),fetch("https://ew-ig-bot.sanchezchemsou.workers.dev/api/extra").then(r=>r.json()).catch(()=>({}))]).then(([a,b])=>{window.PRODS=[...(b.produits||[]),...(a.produits||[])];showProd()});
 const val=n=>{const e=document.querySelector(`input[name=${n}]:checked`);return e?e.value:""};
+fetch("https://ew-ig-bot.sanchezchemsou.workers.dev/api/hubs").then(r=>r.json()).then(H=>{let n=0;(D.wilayas||[]).forEach(w=>{const c=String(parseInt(w.label,10));if(H[c]&&H[c].length){w.offices=H[c];n++}});if(n&&typeof drawOffice==="function")drawOffice()}).catch(()=>{});   // 22/11 : bureaux ZR a jour
 function curW(){const i=$("#wl").value;return i===""?null:D.wilayas[+i]}
 function drawDeliv(){const w=curW();
  if(!w){$("#dl").innerHTML="";$("#ofw").classList.add("hide");return}
