@@ -1,7 +1,36 @@
 {
- "maj": "2026-11-23",
+ "maj": "2026-11-26",
  "formulaire": "https://docs.google.com/forms/d/e/1FAIpQLSfqAFtPjS53pM7ie7EvTt4_EhEUWL1CACVT0k6WY4YrFyOd0g/viewform",
  "produits": [
+  {
+   "id": "hoodie-welcome",
+   "nom": "HOODIE WELCOME",
+   "type": "HOODIE",
+   "tag": "RAP",
+   "prix": 3900,
+   "tailles": [
+    "S",
+    "M",
+    "L",
+    "XL"
+   ],
+   "couleurs": [
+    "Black"
+   ],
+   "desc": "ديزاين راب، للي يعرفو.\n\n- هودي oversize، قماش سميك وسخون\n- طباعة DTF قدام ولور\n- الألوان ما يروحوش مع الغسيل\n- الكابيشو (capuche) عريض ومريح\n- المقاسات: S / M / L / XL\n- الألوان: Black\n- التوصيل 500 DA: للمكتب تاع ZR Express ولا للدار\n- الخلاص كي توصلك الطلبية",
+   "img": [
+    "img/hoodie-welcome/back.webp",
+    "img/hoodie-welcome/front.webp",
+    "img/hoodie-welcome/combo.webp",
+    "img/hoodie-welcome/photo.webp"
+   ],
+   "thumb": "img/hoodie-welcome/t_back.webp",
+   "thumb2": "img/hoodie-welcome/t_front.webp",
+   "avif": "img/hoodie-welcome/t_back.avif",
+   "sold": false,
+   "commande": "commande.html?p=HOODIE+WELCOME&t=HOODIE+%28sweat%29&c=NOIR",
+   "date": "2026-11-24"
+  },
   {
    "id": "hoodie-asta-collab",
    "nom": "HOODIE ASTA COLLAB",
